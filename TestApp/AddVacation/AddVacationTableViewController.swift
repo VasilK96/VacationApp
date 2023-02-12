@@ -27,7 +27,7 @@ class AddVacationTableViewController: UITableViewController,UIImagePickerControl
     }
 
     @IBAction func addVacationBtn(_ sender: Any) {
-        createItem(name: vacationName.text!, hotel: hotel.text!, location: location.text!, about: about.text!, money:0, imageName: "")
+        createItem(name: vacationName.text!, hotel: hotel.text!, location: location.text!, about: about.text!, money: Int64(money.text!) ?? 0, imageName: "")
         
     }
     

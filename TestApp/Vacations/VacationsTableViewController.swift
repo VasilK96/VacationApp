@@ -51,10 +51,11 @@ class VacationsTableViewController: AddVacationTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = VacationDetailsViewController()
-        self.show(vc, sender: VacationsTableViewController())
-        vacationIndex = indexPath.row
-        guard vacationIndex != nil else {return}
+        
+        let vc = VacationDetailsViewController(nibName: nil, bundle: nil, indexPath.row)
+        self.show(vc, sender: models[indexPath.row])
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

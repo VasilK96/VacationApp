@@ -17,12 +17,35 @@ class VacationDetailsViewController: UIViewController, UIImagePickerControllerDe
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var models: [DesiredVacation] = []
-    
+    var indexOfSelectedVacation: Int {
+       get {
+         return UserDefaults.standard.integer(forKey: "VacationIndex")
+       }
+       set {
+         UserDefaults.standard.set(newValue, forKey: "VacationIndex")
+       }
+     }
    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.getAllItem()
-    }
+   override func viewDidLoad() {
+       super.viewDidLoad()
+       
+       self.getAllItem()
+   }
+   
+   init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?,_ index: Int) {
+     
+       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+       let a = index
+       self.indexOfSelectedVacation = a
+      
+   }
+   
+   required init?(coder: NSCoder) {
+       super.init(coder: coder)
+      
+       
+   }
+   
     
     @IBAction func addImageBtn(){
         let vc = UIImagePickerController()
@@ -51,9 +74,9 @@ class VacationDetailsViewController: UIViewController, UIImagePickerControllerDe
             models = try context.fetch(DesiredVacation.fetchRequest())
             DispatchQueue.main.async {
                 
-                self.name.text = self.models[VacationsTableViewController().vacationIndex ?? 0].name
-                self.hotelName.text = self.models[VacationsTableViewController().vacationIndex ?? 0].hotel
-                self.location.text = ", \( self.models[(VacationsTableViewController().vacationIndex ?? 0)].location ?? "")"
+                self.name.text = self.models[self.indexOfSelectedVacation].name
+                self.hotelName.text = "Hotel: \(self.models[self.indexOfSelectedVacation].hotel ?? "")"
+                self.location.text = ", \( self.models[self.indexOfSelectedVacation].location ?? "")"
                 
             }
         }
